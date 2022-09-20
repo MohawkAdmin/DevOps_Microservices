@@ -4,8 +4,8 @@ import logging
 
 import pandas as pd
 #I commented below line out as it was giving error when "make lint"
-from sklearn.externals import joblib
-
+#from sklearn.externals import joblib
+import joblib
 from sklearn.preprocessing import StandardScaler
 #import joblib
 
