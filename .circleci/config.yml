@@ -9,11 +9,10 @@ jobs:
 
     steps:
       - checkout
-
       # Download and cache dependencies
       - restore_cache:
           keys:
-            # - v1-dependencies-{{ checksum "requirements.txt" }}
+            - v1-dependencies-{{ checksum "requirements.txt" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
@@ -22,12 +21,12 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-
+            make install
             wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 &&\
             chmod +x /bin/hadolint
       - save_cache:
           paths: ./venv
-          key: v1-dependencies
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
 
       # run lint!
       - run:
@@ -35,6 +34,3 @@ jobs:
           command: |
             . venv/bin/activate
             make lint 
-
-      #another comment to allow to push##
-      ###################################
